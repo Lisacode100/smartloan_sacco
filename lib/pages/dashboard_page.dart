@@ -24,6 +24,8 @@ class DashboardPage extends StatelessWidget {
     },
   ];
 
+ DashboardPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
