@@ -5,11 +5,10 @@ import 'loans_plan.dart';
 import 'users_page.dart';
 import 'payment_page.dart';
 import 'browsers_page.dart';
-
-// Make sure StatelessWidget is imported from material.dart above.
+import 'logout.dart';
 
 class DashboardPage extends StatelessWidget {
-  final payments = [
+  final List<Map<String, String>> payments = const [
     {
       "refNo": "S001023",
       "payee": "Nikhil",
@@ -24,24 +23,31 @@ class DashboardPage extends StatelessWidget {
     },
   ];
 
- DashboardPage({super.key});
+  const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: _buildDrawer(context),
-      appBar: AppBar(title: Text("SACCO SHIELD Dashboard")),
+      appBar: AppBar(
+        title: const Text("SACCO SHIELD Dashboard"),
+        centerTitle: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
             _buildDashboardCards(),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               "Payment List",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18, 
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            _buildPaymentsTable(context),
+            const SizedBox(height: 10),
+            _buildPaymentsTable(),
           ],
         ),
       ),
@@ -51,40 +57,59 @@ class DashboardPage extends StatelessWidget {
   Widget _buildDrawer(BuildContext context) {
     return Drawer(
       child: ListView(
+        padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
-            child: Text("SACCO SHIELD", style: TextStyle(fontSize: 20)),
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+            child: Text(
+              "SACCO SHIELD", 
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+              ),
+            ),
           ),
-          ListTile(
-            title: Text("Home"),
-            leading: Icon(Icons.dashboard),
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage())),
+          _buildDrawerItem(
+            context: context,
+            icon: Icons.dashboard,
+            title: "Home",
+            page: const HomePage(),
           ),
-          ListTile(
-            title: Text("Loans"),
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => LoansPage())),
+          _buildDrawerItem(
+            context: context,
+            icon: Icons.credit_card,
+            title: "Loans",
+            page: LoansPage(),
           ),
-          ListTile(
-            title: Text("Payments"),
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => PaymentsPage())),
+          _buildDrawerItem(
+            context: context,
+            icon: Icons.payment,
+            title: "Payments",
+            page: const PaymentsPage(),
           ),
-          ListTile(
-            title: Text("Borrowers"),
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => BrowsersPage())),
+          _buildDrawerItem(
+            context: context,
+            icon: Icons.people,
+            title: "Borrowers",
+            page: BrowsersPage(),
           ),
-          
-         
-          ListTile(
-            title: Text("Users"),
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => UsersPage())),
+          _buildDrawerItem(
+            context: context,
+            icon: Icons.supervised_user_circle,
+            title: "Users",
+            page: const UsersPage(),
           ),
+          const Divider(),
           ListTile(
-            title: Text("Logout"),
-            leading: Icon(Icons.logout),
+            leading: const Icon(Icons.logout),
+            title: const Text("Logout"),
             onTap: () {
               Navigator.pop(context); // Close drawer
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Logged out successfully')),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const LogoutPage()),
               );
             },
           ),
@@ -93,14 +118,34 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
+  Widget _buildDrawerItem({
+    required BuildContext context,
+    required IconData icon,
+    required String title,
+    required Widget page,
+  }) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      onTap: () {
+        Navigator.pop(context); // Close drawer
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => page),
+        );
+      },
+    );
+  }
+
   Widget _buildDashboardCards() {
     return GridView.count(
       crossAxisCount: 2,
       shrinkWrap: true,
-      crossAxisSpacing: 10,
+      physics: const NeverScrollableScrollPhysics(),
+      childAspectRatio: 1.5,
       mainAxisSpacing: 10,
-      physics: NeverScrollableScrollPhysics(),
-      children: [
+      crossAxisSpacing: 10,
+      children: const [
         DashboardCard(
           title: "Payments Today",
           value: "0.00",
@@ -129,69 +174,87 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPaymentsTable(BuildContext context) {
+  Widget _buildPaymentsTable() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Container(
-        constraints: BoxConstraints(
-          minWidth: MediaQuery.of(context).size.width,
-        ),
-        child: DataTable(
-          columnSpacing: 12,
-          dataRowMinHeight: 40,
-          dataRowMaxHeight: 60,
-          headingRowHeight: 40,
-          columns: [
-            DataColumn(label: Text("#", style: TextStyle(fontWeight: FontWeight.bold))),
-            DataColumn(label: Text("Loan Ref No", style: TextStyle(fontWeight: FontWeight.bold))),
-            DataColumn(
-              label: ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 100),
-                child: Text("Payee", style: TextStyle(fontWeight: FontWeight.bold)),
+      child: DataTable(
+        columnSpacing: 12,
+        dataRowHeight: 48,
+        headingRowHeight: 40,
+        columns: const [
+          DataColumn(label: _TableHeader("#")),
+          DataColumn(label: _TableHeader("Loan Ref No")),
+          DataColumn(label: _TableHeader("Payee", minWidth: 100)),
+          DataColumn(label: _TableHeader("Amount")),
+          DataColumn(label: _TableHeader("Penalty")),
+          DataColumn(label: _TableHeader("Action")),
+        ],
+        rows: payments.map((p) => DataRow(
+          cells: [
+            DataCell(Text('${payments.indexOf(p) + 1}')),
+            DataCell(_TableCell(p["refNo"]!)),
+            DataCell(_TableCell(p["payee"]!)),
+            DataCell(_TableCell(p["amount"]!)),
+            DataCell(_TableCell(p["penalty"]!)),
+            DataCell(
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.edit, color: Colors.blue, size: 20),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    onPressed: () {},
+                  ),
+                  const SizedBox(width: 4),
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red, size: 20),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    onPressed: () {},
+                  ),
+                ],
               ),
             ),
-            DataColumn(label: Text("Amount", style: TextStyle(fontWeight: FontWeight.bold))),
-            DataColumn(label: Text("Penalty", style: TextStyle(fontWeight: FontWeight.bold))),
-            DataColumn(label: Text("Action", style: TextStyle(fontWeight: FontWeight.bold))),
           ],
-          rows: List.generate(payments.length, (index) {
-            final p = payments[index];
-            return DataRow(
-              cells: [
-                DataCell(Text('${index + 1}')),
-                DataCell(Text(p["refNo"]!, overflow: TextOverflow.ellipsis)),
-                DataCell(
-                  ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: 100),
-                    child: Text(p["payee"]!, overflow: TextOverflow.ellipsis),
-                  ),
-                ),
-                DataCell(Text(p["amount"]!, overflow: TextOverflow.ellipsis)),
-                DataCell(Text(p["penalty"]!, overflow: TextOverflow.ellipsis)),
-                DataCell(
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.edit, color: Colors.blue, size: 20),
-                        padding: EdgeInsets.zero,
-                        constraints: BoxConstraints(),
-                      ),
-                      SizedBox(width: 4),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.delete, color: Colors.red, size: 20),
-                        padding: EdgeInsets.zero,
-                        constraints: BoxConstraints(),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            );
-          }),
+        )).toList(),
+      ),
+    );
+  }
+}
+
+class _TableHeader extends StatelessWidget {
+  final String text;
+  final double minWidth;
+
+  const _TableHeader(this.text, {this.minWidth = 60});
+
+  @override
+  Widget build(BuildContext context) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(minWidth: minWidth),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
         ),
+      ),
+    );
+  }
+}
+
+class _TableCell extends StatelessWidget {
+  final String text;
+
+  const _TableCell(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: text,
+      child: Text(
+        text,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
