@@ -1,89 +1,92 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget{
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
-      body: Center(
-          child:Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text.rich(
-                TextSpan(
+      backgroundColor: const Color(0xFF007C91),
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(35),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 16,
+                      offset: Offset(0, 8),
+                    )
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    TextSpan(
-                      text: "SMART",
+                    const Text(
+                      "Welcome!",
                       style: TextStyle(
-                        color: Colors.greenAccent,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF007C91),
                       ),
                     ),
-                    TextSpan(
-                      text: "SACCOS",
+                    const SizedBox(height: 12),
+                    const Text(
+                      "Track your SACCO savings\nfrom anywhere, anytime.",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Colors.greenAccent,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF007C91),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 36, vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        "Register Your Sacco",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF007C91),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/login');
+                      },
+                      child: const Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
                   ],
                 ),
-
               ),
-              SizedBox(height: 10),
-              Text(
-                "Track your Savings Account from anywhere at anytime",
-                style: TextStyle(color: Color(0xFF002147),fontSize: 18),
-
-              ),
-              SizedBox(height: 20),
-              Row(
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        padding: EdgeInsets.symmetric(horizontal: 20,vertical: 12)
-                    ),
-                    onPressed: (){},
-                    child: Text(
-                      "Register your SACCO",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      padding: EdgeInsets.symmetric(horizontal:20,vertical:12),
-                    ),
-
-
-                    onPressed: (){},
-                    child: Text(
-                      "Login",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-
-
-
-
-
-
-                ],
-              ),
-
-
-
-            ],
-          )
-
+            ),
+          ),
+        ],
       ),
     );
   }
 }
-
