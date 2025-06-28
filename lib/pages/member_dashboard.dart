@@ -303,7 +303,7 @@ class _MemberDashboardState extends State<MemberDashboard> {
             ],
           ),
           const SizedBox(height: 8),
-          ..._recentTransactions.map((t) => _buildTransactionItem(t['amount'], t['type'], t['date'], t['icon'])),
+          ..._recentTransactions.map((t) => _buildTransactionItem((t['amount'] as num).toDouble(), t['type'], t['date'], t['icon'])),
         ],
       ),
     );
