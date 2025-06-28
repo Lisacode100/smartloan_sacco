@@ -27,10 +27,10 @@ class MemberDashboard extends StatefulWidget {
 
 class _MemberDashboardState extends State<MemberDashboard> {
   // Color Scheme
-  final Color _primaryColor = const Color(0xFF6C5CE7);
-  final Color _successColor = const Color(0xFF00B894);
-  final Color _dangerColor = const Color(0xFFE17055);
-  final Color _warningColor = const Color(0xFFFDCB6E);
+  final Color _primaryColor = Colors.blue;
+  final Color _successColor = Colors.green;
+  final Color _dangerColor = Colors.red;
+  final Color _warningColor = Colors.amber;
   final Color _bgColor = const Color(0xFFF5F6FA);
   final Color _textSecondary = const Color(0xFF666666);
 
@@ -76,9 +76,6 @@ class _MemberDashboardState extends State<MemberDashboard> {
         ),
         backgroundColor: _primaryColor,
         elevation: 0,
-        actions: _currentIndex == 0 
-            ? [IconButton(icon: const Icon(Icons.notifications), onPressed: _showNotifications)]
-            : null,
       ),
       body: _getCurrentScreen(),
       bottomNavigationBar: _buildBottomNavigationBar(),
@@ -98,15 +95,26 @@ class _MemberDashboardState extends State<MemberDashboard> {
   Widget _buildBottomNavigationBar() {
     return BottomNavigationBar(
       currentIndex: _currentIndex,
-      onTap: (index) => setState(() => _currentIndex = index),
+      onTap: (index) {
+        if (index == 4) {
+          // Logout tapped
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('/home', (route) => false);
+        } else {
+          setState(() => _currentIndex = index);
+        }
+      },
       selectedItemColor: _primaryColor,
       unselectedItemColor: _textSecondary,
       type: BottomNavigationBarType.fixed,
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.dashboard), label: 'Dashboard'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard), label: 'Dashboard'),
         BottomNavigationBarItem(icon: Icon(Icons.savings), label: 'Savings'),
         BottomNavigationBarItem(icon: Icon(Icons.money), label: 'Loans'),
-        BottomNavigationBarItem(icon: Icon(Icons.swap_horiz), label: 'Transactions'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.swap_horiz), label: 'Transactions'),
+        BottomNavigationBarItem(icon: Icon(Icons.logout), label: 'Logout'),
       ],
     );
   }
@@ -393,15 +401,6 @@ class _MemberDashboardState extends State<MemberDashboard> {
     );
   }
 
-  void _showNotifications() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('No new notifications', style: GoogleFonts.poppins()),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: _primaryColor,
-      ),
-    );
-  }
 
   String _formatCurrency(double amount) {
     return NumberFormat.currency(symbol: 'UGX ', decimalDigits: 0).format(amount);

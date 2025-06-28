@@ -56,7 +56,9 @@ class HomePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/register');
+                      },
                       child: const Text(
                         "Register Your Sacco",
                         style: TextStyle(color: Colors.white, fontSize: 16),

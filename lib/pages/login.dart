@@ -1,128 +1,70 @@
 import 'package:flutter/material.dart';
-import 'dashboard_page.dart'; 
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _isPasswordObscured = true;
+
+  @override
   Widget build(BuildContext context) {
+    final userRole = ModalRoute.of(context)?.settings.arguments as String?;
+
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: const Text("Login"),
+        centerTitle: true,
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // Header with back button
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () => Navigator.pop(context),
-                    color: const Color(0xFF111418),
-                  ),
-                  const Expanded(
-                    child: Text(
-                      "Welcome",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF111418),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 48), // For balance
-                ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const TextField(
+                decoration: InputDecoration(
+                  labelText: "Phone Number",
+                  border: OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.phone,
               ),
-            ),
-            
-            // Profile Image
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Center(
-                child: Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: const Color(0xFFF0F2F5),
-                    border: Border.all(color: Colors.white, width: 4),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                        "https://lh3.googleusercontent.com/aida-public/AB6AXuAo3B7lN-PPzEiWSvMbi7olZMHth7vO3jzHAh1oYljxahG5AO18h6QYCsh7ka6sF0mABOJEDwbFdBBJxFaTdVL7trXp8maZ_poN_1n5wmGnngc0nsRKNOGCLJtFYqqO9pzTOPd2avqTtOLrcKFYPuM1cnlp3uffcG4cJEpIewEJMOixOpo8moZQOLFkLTW3osMLSrSRuWo8qu0cKTYNzekgb9prHNNvOZ3liZ3axCIKkLHtH7WlWYKplb_TsPJgitYTVWWeVAkZMQ0",
-                      ),
-                      fit: BoxFit.cover,
+              const SizedBox(height: 16),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  border: const OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isPasswordObscured
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                     ),
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordObscured = !_isPasswordObscured;
+                      });
+                    },
                   ),
                 ),
+                obscureText: _isPasswordObscured,
               ),
-            ),
-            
-            // Form Fields
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color(0xFFF0F2F5),
-                      hintText: "First Name",
-                      hintStyle: const TextStyle(color: Color(0xFF60748A)),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.all(16),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color(0xFFF0F2F5),
-                      hintText: "Last Name",
-                      hintStyle: const TextStyle(color: Color(0xFF60748A)),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.all(16),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color(0xFFF0F2F5),
-                      hintText: "Phone Number",
-                      hintStyle: const TextStyle(color: Color(0xFF60748A)),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none,
-                      ),
-                      contentPadding: const EdgeInsets.all(16),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            
-            const Spacer(),
-            
-            // Continue Button
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SizedBox(
+              const SizedBox(height: 24),
+              SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle login and navigate to dashboard
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const DashboardPage()),
-                    );
+                    if (userRole == 'Admin') {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/dashboard', (route) => false);
+                    } else {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/member-dashboard', (route) => false);
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0C77F2),
@@ -132,7 +74,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    "Continue",
+                    "Login",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -141,21 +83,20 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            
-            // Terms Text
-            const Padding(
-              padding: EdgeInsets.fromLTRB(16, 0, 16, 20),
-              child: Text(
-                "By continuing, you agree to our Terms of Service and Privacy Policy.",
+              const SizedBox(height: 12),
+              const Text(
+                "Note: Your account must be verified by an admin before you can log in.",
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xFF60748A),
-                  fontSize: 14,
-                ),
+                style: TextStyle(color: Colors.grey),
               ),
-            ),
-          ],
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/register');
+                },
+                child: const Text("Don't have an account? Register"),
+              )
+            ],
+          ),
         ),
       ),
     );

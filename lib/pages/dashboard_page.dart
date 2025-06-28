@@ -5,7 +5,6 @@ import 'loans_plan.dart';
 import 'users_page.dart';
 import 'payment_page.dart';
 import 'browsers_page.dart';
-import 'logout.dart';
 
 class DashboardPage extends StatelessWidget {
   final List<Map<String, String>> payments = const [
@@ -106,11 +105,8 @@ class DashboardPage extends StatelessWidget {
             leading: const Icon(Icons.logout),
             title: const Text("Logout"),
             onTap: () {
-              Navigator.pop(context); // Close drawer
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LogoutPage()),
-              );
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/home', (route) => false);
             },
           ),
         ],
@@ -179,6 +175,7 @@ class DashboardPage extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       child: DataTable(
         columnSpacing: 12,
+        // ignore: deprecated_member_use
         dataRowHeight: 48,
         headingRowHeight: 40,
         columns: const [

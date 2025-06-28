@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smartloan_sacco/pages/login.dart';
-import 'login.dart'; // Make sure you have this page
 
 class LogoutPage extends StatelessWidget {
   const LogoutPage({super.key});

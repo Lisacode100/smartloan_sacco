@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:logging/logging.dart';
 
 class RegisterSaccoPage extends StatefulWidget {
   const RegisterSaccoPage({super.key});
@@ -9,36 +9,62 @@ class RegisterSaccoPage extends StatefulWidget {
 }
 
 class _RegisterSaccoPageState extends State<RegisterSaccoPage> {
+  final _log = Logger('RegisterSaccoPage');
   final _formKey = GlobalKey<FormState>();
-  final _saccoNameController = TextEditingController();
   final _registrarNameController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _membersController = TextEditingController();
+  final _passwordController = TextEditingController();
+  String _selectedRole = 'Member';
 
-  DateTime? _selectedDate;
-
-  // Date picker
-  Future<void> _pickDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime(2020),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    if (picked != null) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
-  }
+  bool _isRegistering = false;
+  bool _isPasswordObscured = true;
 
   @override
   void dispose() {
-    _saccoNameController.dispose();
     _registrarNameController.dispose();
     _phoneController.dispose();
-    _membersController.dispose();
+    _passwordController.dispose();
     super.dispose();
+  }
+
+  void _registerSacco() {
+    if (!(_formKey.currentState?.validate() ?? false)) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Please fill all required fields."),
+          ),
+        );
+      }
+      return;
+    }
+
+    setState(() {
+      _isRegistering = true;
+    });
+
+    // Simulate a network call
+    Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted) return;
+
+      setState(() {
+        _isRegistering = false;
+      });
+
+      _log.info(
+          'Successfully registered User: ${_registrarNameController.text} as $_selectedRole');
+
+      // Simulate sending a verification code and navigate, passing the role
+      const verificationCode = '123456'; // Mock code
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        '/verification',
+        (route) => false,
+        arguments: {
+          'code': verificationCode,
+          'role': _selectedRole,
+        },
+      );
+    });
   }
 
   @override
@@ -52,62 +78,92 @@ class _RegisterSaccoPageState extends State<RegisterSaccoPage> {
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: ListView(
             children: [
-              _buildTextField(_saccoNameController, 'SACCO Name'),
+              _buildTextField(_registrarNameController, "Full Names"),
               const SizedBox(height: 12),
-              _buildTextField(_registrarNameController, "Registrar's Name"),
-              const SizedBox(height: 12),
-              _buildTextField(_phoneController, 'Phone Number',
-                  keyboardType: TextInputType.phone),
-              const SizedBox(height: 12),
-
-              // Date Established Picker
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Date Established'),
-                subtitle: Text(
-                  _selectedDate != null
-                      ? DateFormat.yMMMMd().format(_selectedDate!)
-                      : 'Pick a date',
-                ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.calendar_today),
-                  onPressed: () => _pickDate(context),
-                ),
+              _buildTextField(
+                _phoneController,
+                'Phone Number',
+                keyboardType: TextInputType.phone,
+                helperText: 'e.g., 0712345678',
               ),
               const SizedBox(height: 12),
-
-              _buildTextField(_membersController, 'Estimated Number of Members',
-                  keyboardType: TextInputType.number),
-              const SizedBox(height: 24),
-
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate() &&
-                      _selectedDate != null) {
-                    // You can send data to backend here
-                    print('SACCO: ${_saccoNameController.text}');
-                    print('Registrar: ${_registrarNameController.text}');
-                    print('Phone: ${_phoneController.text}');
-                    print('Date: $_selectedDate');
-                    print('Members: ${_membersController.text}');
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("SACCO Registered!")),
-                    );
+              TextFormField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: const OutlineInputBorder(),
+                  helperText: 'Password must be at least 6 characters long.',
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isPasswordObscured
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordObscured = !_isPasswordObscured;
+                      });
+                    },
+                  ),
+                ),
+                obscureText: _isPasswordObscured,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a password';
                   }
+                  if (value.length < 6) {
+                    return 'Password must be at least 6 characters';
+                  }
+                  return null;
                 },
+              ),
+              const SizedBox(height: 12),
+              DropdownButtonFormField<String>(
+                value: _selectedRole,
+                decoration: const InputDecoration(
+                  labelText: 'Role',
+                  border: OutlineInputBorder(),
+                ),
+                items: <String>['Member', 'Admin']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedRole = newValue!;
+                  });
+                },
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _isRegistering ? null : _registerSacco,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF007C91),
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                child: const Text(
-                  "Register SACCO",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                child: Semantics(
+                  label: _isRegistering
+                      ? "Registering, please wait"
+                      : "Register SACCO",
+                  child: _isRegistering
+                      ? const CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        )
+                      : const Text(
+                          "Register SACCO",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
                 ),
               ),
             ],
@@ -118,12 +174,13 @@ class _RegisterSaccoPageState extends State<RegisterSaccoPage> {
   }
 
   Widget _buildTextField(TextEditingController controller, String label,
-      {TextInputType keyboardType = TextInputType.text}) {
+      {TextInputType keyboardType = TextInputType.text, String? helperText}) {
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: label,
+        helperText: helperText,
         border: const OutlineInputBorder(),
       ),
       validator: (value) =>
