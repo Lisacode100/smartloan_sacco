@@ -208,6 +208,24 @@ class _SplashPageState extends State<SplashPage> {
   }
 }
 
+// 👨‍🦯 Home screen for blind users
+class VoiceAssistedHomeScreen extends StatelessWidget {
+  const VoiceAssistedHomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Text(
+          'Voice Assisted Home Screen',
+          style: TextStyle(fontSize: 24, color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
 
 
 
