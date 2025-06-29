@@ -74,6 +74,20 @@ class _SplashPageState extends State<SplashPage> {
     setState(() {});
   }
 
+  Future<void> _startListening() async {
+    if (!_speechEnabled || _isListening) return;
+    setState(() => _isListening = true);
+
+    await _speechToText.listen(
+      onResult: (result) {
+        _lastWords = result.recognizedWords.toLowerCase();
+        _processVoiceCommand();
+      },
+      listenFor: const Duration(seconds: 8),
+    );
+  }
+
+
 
 
 
