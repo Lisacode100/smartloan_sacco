@@ -192,6 +192,23 @@ class _SplashPageState extends State<SplashPage> {
                           ),
                         ),
 
+                        child: const Text(
+                          'I am not visually impaired. Continue',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 
 
 
