@@ -87,6 +87,24 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
 
+  void _processVoiceCommand() {
+    if (_lastWords.contains('yes')) {
+      _handleVisuallyImpaired(true);
+    }
+  }
+
+  void _navigateToHome(bool isVisuallyImpaired) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => isVisuallyImpaired
+            ? const VoiceAssistedHomeScreen()
+            : const HomePage(),
+      ),
+    );
+  }
+
+
 
 
 
