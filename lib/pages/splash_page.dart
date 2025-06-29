@@ -169,6 +169,30 @@ class _SplashPageState extends State<SplashPage> {
                       style: TextStyle(fontSize: 18, color: Colors.white70),
                     ),
 
+                     const SizedBox(height: 20),
+                    if (_isListening)
+                      const Text(
+                        'Listening... Please say "yes" or tap anywhere.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.lightGreenAccent,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    const SizedBox(height: 30),
+                    if (_showVisualOptions)
+                      ElevatedButton(
+                        onPressed: () => _handleVisuallyImpaired(false),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF00BFA6),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+
+
 
 
 
