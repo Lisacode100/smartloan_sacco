@@ -35,6 +35,16 @@ class _SplashPageState extends State<SplashPage> {
     final isFirstLaunch = _prefs.getBool('first_launch') ?? true;
     final isVisuallyImpaired = _prefs.getBool('is_visually_impaired') ?? false;
 
+     if (!isFirstLaunch) {
+      _navigateToHome(isVisuallyImpaired);
+    } else {
+      await _flutterTts.setLanguage('en');
+      await _flutterTts.setSpeechRate(0.5);
+      await _flutterTts.setPitch(1.0);
+
+      await _initSpeech();
+
+
 
 
 
