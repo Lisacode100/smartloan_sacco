@@ -145,6 +145,31 @@ class _SplashPageState extends State<SplashPage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
 
+                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/accessibility.svg',
+                      height: 130,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(height: 30),
+                    const Text(
+                      'Welcome to SACCO Shield',
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Are you visually impaired?',
+                      style: TextStyle(fontSize: 18, color: Colors.white70),
+                    ),
+
+
 
 
 
