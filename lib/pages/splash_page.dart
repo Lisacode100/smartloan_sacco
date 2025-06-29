@@ -104,6 +104,21 @@ class _SplashPageState extends State<SplashPage> {
     );
   }
 
+   Future<void> _handleVisuallyImpaired(bool isImpaired) async {
+    await _prefs.setBool('first_launch', false);
+    await _prefs.setBool('is_visually_impaired', isImpaired);
+
+    if (isImpaired) {
+      await _flutterTts.speak(
+        'Voice assistance enabled. You can now use this app by tapping once to hear options, '
+        'and swiping left or right to navigate.',
+      );
+    }
+
+    _navigateToHome(isImpaired);
+  }
+
+
 
 
 
