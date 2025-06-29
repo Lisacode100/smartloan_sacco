@@ -44,6 +44,27 @@ class _SplashPageState extends State<SplashPage> {
 
       await _initSpeech();
 
+       // Speak immediately
+      await _flutterTts.speak(
+        'Welcome to SACCO Shield. If you are visually impaired, say yes or tap the screen. '
+        'If you are not visually impaired, wait and tap the continue button below.',
+      );
+
+       // Begin listening immediately
+      await Future.delayed(const Duration(seconds: 1));
+      _startListening();
+
+      // Show button for sighted users after 10 seconds
+      Future.delayed(const Duration(seconds: 10), () {
+        if (!_showVisualOptions) {
+          setState(() {
+            _showVisualOptions = true;
+          });
+        }
+      });
+
+
+
 
 
 
