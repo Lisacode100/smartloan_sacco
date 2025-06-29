@@ -63,6 +63,18 @@ class _SplashPageState extends State<SplashPage> {
         }
       });
 
+       setState(() {
+        _prefsLoaded = true;
+      });
+    }
+  }
+
+  Future<void> _initSpeech() async {
+    _speechEnabled = await _speechToText.initialize();
+    setState(() {});
+  }
+
+
 
 
 
