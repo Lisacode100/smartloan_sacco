@@ -118,6 +118,35 @@ class _SplashPageState extends State<SplashPage> {
     _navigateToHome(isImpaired);
   }
 
+   @override
+  Widget build(BuildContext context) {
+    if (!_prefsLoaded) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => _handleVisuallyImpaired(true),
+      child: Scaffold(
+        body: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF0F2027), Color(0xFF2C5364)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          child: SafeArea(
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+
+
+
 
 
 
