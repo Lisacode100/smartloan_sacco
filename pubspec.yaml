@@ -38,6 +38,10 @@ dependencies:
   intl: ^0.18.1
   table_calendar: ^3.0.9
   logging: ^1.2.0
+  speech_to_text: ^6.3.0
+  flutter_tts: ^3.6.3
+
+  shared_preferences: ^2.2.0
 
 
 
