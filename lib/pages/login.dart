@@ -91,6 +91,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextButton(
                 onPressed: () {
+                  Navigator.pushNamed(context, '/forgotpassword');
+                },
+                child: const Text("Forgotten PIN Password? Tap here"),
+              ),
+              TextButton(
+                onPressed: () {
                   Navigator.pushNamed(context, '/register');
                 },
                 child: const Text("Don't have an account? Register"),
