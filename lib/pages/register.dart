@@ -112,10 +112,10 @@ class _RegisterSaccoPageState extends State<RegisterSaccoPage> {
                 obscureText: _isPasswordObscured,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter a password';
+                    return 'Please enter a PIN password';
                   }
-                  if (value.length < 6) {
-                    return 'Password must be at least 6 characters';
+                  if (value.length < 4) {
+                    return 'PIN Password must be at least 4 characters';
                   }
                   return null;
                 },
