@@ -15,28 +15,11 @@ class _ResetPinState extends State<ResetPin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Color(0xFF007C91),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: (){
-                Navigator.pop(context);
-              },
-              child: const Padding(
-                padding: EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                    "<Back to HomePage>",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      decoration: TextDecoration.underline,
-                    )
-                ),
-
-              ),
-            ),
             Container(
               width: 350,
               padding: const EdgeInsets.all(24),
@@ -57,7 +40,7 @@ class _ResetPinState extends State<ResetPin> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Center(
-                    child:Icon(Icons.lock,size:40,color: Colors.green),
+                    child:Icon(Icons.lock,size:40,color: Color(0xFF007C91)),
                   ),
                   SizedBox(height:16),
                   const Center(
@@ -101,11 +84,14 @@ class _ResetPinState extends State<ResetPin> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: Color(0xFF007C91),
                       padding: EdgeInsets.symmetric(horizontal: 20,vertical: 12),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
-                    child: const Text("Send Code"),
+                    child: const Text(
+                        "Send Code",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),

@@ -17,7 +17,13 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Login"),
+        backgroundColor: Color(0xFF007C91),
+        title: const Text(
+            "Login",
+          style: TextStyle(color: Colors.white),
+
+
+        ),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -67,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF0C77F2),
+                    backgroundColor: const Color(0xFF007C91),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -93,13 +99,20 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   Navigator.pushNamed(context, '/forgotpassword');
                 },
-                child: const Text("Forgotten PIN Password? Tap here"),
+                child: const Text(
+                    "Forgotten PIN Password? Tap here",
+                  style: TextStyle(color: Color(0xFF007C91)),
+                ),
               ),
               TextButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/register');
                 },
-                child: const Text("Don't have an account? Register"),
+                child: const Text(
+                    "Don't have an account? Register",
+                  style: TextStyle(color: Color(0xFF007C91),
+                  )
+                )
               )
             ],
           ),

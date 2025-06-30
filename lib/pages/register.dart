@@ -93,9 +93,9 @@ class _RegisterSaccoPageState extends State<RegisterSaccoPage> {
               TextFormField(
                 controller: _passwordController,
                 decoration: InputDecoration(
-                  labelText: 'Password',
+                  labelText: 'PIN Password',
                   border: const OutlineInputBorder(),
-                  helperText: 'Password must be at least 6 characters long.',
+                  helperText: 'PIN must be atleast 4 characters',
                   suffixIcon: IconButton(
                     icon: Icon(
                       _isPasswordObscured
