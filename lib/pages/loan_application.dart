@@ -150,4 +150,25 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               ),
               const SizedBox(height: 20),
 
+               // Repayment Period
+              DropdownButtonFormField<int>(
+                value: _repaymentPeriod,
+                items: [3, 6, 9, 12, 18, 24].map((months) {
+                  return DropdownMenuItem(
+                    value: months,
+                    child: Text('$months months'),
+                  );
+                }).toList(),
+                onChanged: (value) => setState(() => _repaymentPeriod = value!),
+                decoration: const InputDecoration(
+                  labelText: 'Repayment Period',
+                ),
+              ),
+              const SizedBox(height: 30),
+
+              // Repayment Preview
+              _buildRepaymentPreview(),
+              const SizedBox(height: 30),
+
+
 
