@@ -7,7 +7,7 @@ import 'package:smartloan_sacco/pages/member_dashboard.dart';
 import 'package:smartloan_sacco/pages/register.dart';
 import 'package:smartloan_sacco/pages/verification_page.dart';
 import 'package:smartloan_sacco/utils/logger.dart';
-import 'package:smartloan_sacco/pages/forgot_password.dart';
+
 
 
 
