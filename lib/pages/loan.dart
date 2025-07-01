@@ -19,3 +19,20 @@ class Loan {
     this.payments = const [],
   });
 
+  factory Loan.fromJson(Map<String, dynamic> json) {
+    return Loan(
+      id: json['id'],
+      amount: json['amount'].toDouble(),
+      remainingBalance: json['remainingBalance'].toDouble(),
+      disbursementDate: DateTime.parse(json['disbursementDate']),
+      dueDate: DateTime.parse(json['dueDate']),
+      status: json['status'],
+      type: json['type'],
+      payments: (json['payments'] as List)
+          .map((p) => Payment.fromJson(p))
+          .toList(),
+    );
+  }
+}
+
+
