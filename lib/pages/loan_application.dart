@@ -81,3 +81,56 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                           ),
                         ],
                       ),
+
+                      const SizedBox(height: 10),
+                      Text(
+                        'Based on your savings of ${_formatCurrency(widget.memberSavings)}, '
+                        'you qualify for a maximum loan of ${_formatCurrency(maxLoanAmount)}',
+                        style: theme.textTheme.bodyMedium,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+
+              // Loan Amount
+              TextFormField(
+                controller: _amountController,
+                decoration: InputDecoration(
+                  labelText: 'Loan Amount (UGX)',
+                  prefixText: 'UGX ',
+                  hintText: 'Enter amount between 50,000 and ${_formatCurrency(maxLoanAmount)}',
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.info),
+                    onPressed: () => _showMaxLoanInfo(maxLoanAmount),
+                  ),
+                ),
+
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) return 'Please enter amount';
+                  final amount = double.tryParse(value) ?? 0;
+                  if (amount < 50000) return 'Minimum loan is UGX 50,000';
+                  if (amount > maxLoanAmount) return 'Amount exceeds your limit';
+                  return null;
+                },
+                onChanged: (value) => setState(() {}),
+              ),
+              const SizedBox(height: 20),
+
+              DropdownButtonFormField<String>(
+                value: _loanType,
+                items: const [
+                  DropdownMenuItem(value: 'Personal', child: Text('Personal Loan')),
+                  DropdownMenuItem(value: 'Business', child: Text('Business Loan')),
+                  DropdownMenuItem(value: 'Emergency', child: Text('Emergency Loan')),
+                  DropdownMenuItem(value: 'Education', child: Text('Education Loan')),
+                ],
+                onChanged: (value) => setState(() => _loanType = value!),
+                decoration: const InputDecoration(
+                  labelText: 'Loan Type',
+                ),
+              ),
+              const SizedBox(height: 20),
+
