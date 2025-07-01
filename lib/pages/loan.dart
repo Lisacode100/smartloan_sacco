@@ -8,4 +8,14 @@ class Loan {
   final String type;
   final List<Payment> payments;
 
-  
+    Loan({
+    required this.id,
+    required this.amount,
+    required this.remainingBalance,
+    required this.disbursementDate,
+    required this.dueDate,
+    required this.status,
+    required this.type,
+    this.payments = const [],
+  });
+
