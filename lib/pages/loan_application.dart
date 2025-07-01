@@ -34,3 +34,27 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     _purposeController.dispose();
     super.dispose();
   }
+
+   @override
+  Widget build(BuildContext context) {
+    final maxLoanAmount = widget.memberSavings * 2;
+    final theme = Theme.of(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Loan Application'),
+        backgroundColor: Colors.blue,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'New Loan Application',
+                style: theme.textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
