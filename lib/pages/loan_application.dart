@@ -230,6 +230,45 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     );
   }
 
+  Widget _buildRepaymentPreview() {
+    final amount = double.tryParse(_amountController.text) ?? 0;
+    final monthlyPayment = _repaymentPeriod > 0
+        ? (amount * 1.12) / _repaymentPeriod // 12% interest
+        : 0;
+
+    return Card(
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'REPAYMENT ESTIMATE',
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[600],
+                  ),
+            ),
+            const SizedBox(height: 15),
+            _buildRepaymentRow('Loan Amount:', _formatCurrency(amount)),
+            _buildRepaymentRow('Interest (12%):', _formatCurrency(amount * 0.12)),
+            const Divider(height: 20),
+            _buildRepaymentRow('Total Repayable:', _formatCurrency(amount * 1.12)),
+            const SizedBox(height: 10),
+            _buildRepaymentRow(
+              'Monthly Installment:',
+              _formatCurrency(monthlyPayment.toDouble()),
+              bold: true,
+              color: Colors.green[700],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
 
 
 
