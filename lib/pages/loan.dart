@@ -35,4 +35,24 @@ class Loan {
   }
 }
 
+class Payment {
+  final double amount;
+  final DateTime date;
+  final String reference;
+
+  Payment({
+    required this.amount,
+    required this.date,
+    required this.reference,
+  });
+
+  factory Payment.fromJson(Map<String, dynamic> json) {
+    return Payment(
+      amount: json['amount'].toDouble(),
+      date: DateTime.parse(json['date']),
+      reference: json['reference'],
+    );
+  }
+}
+
 
