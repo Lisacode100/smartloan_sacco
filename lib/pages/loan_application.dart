@@ -312,6 +312,27 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     }
   }
 
+  void _showMaxLoanInfo(double maxAmount) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Loan Limit Information'),
+        content: Text(
+          'Your maximum loan amount is calculated as 2 times your current savings balance.\n\n'
+          'Current Savings: ${_formatCurrency(widget.memberSavings)}\n'
+          'Maximum Loan: ${_formatCurrency(maxAmount)}',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+
 
 
 
