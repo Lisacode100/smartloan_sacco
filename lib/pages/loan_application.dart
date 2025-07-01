@@ -58,3 +58,26 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+
+                   const SizedBox(height: 20),
+
+              // Eligibility Card
+              Card(
+                color: Colors.blue[50],
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.verified_user, color: Colors.blue[700]),
+                          const SizedBox(width: 10),
+                          Text(
+                            'Loan Eligibility',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
