@@ -35,5 +35,19 @@ class AppNotification {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'message': message,
+      'date': date.toIso8601String(),
+      'type': type.index,
+      'isRead': isRead,
+      'actionUrl': actionUrl,
+    };
+  }
+}
+
+
 
 
