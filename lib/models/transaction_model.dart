@@ -11,3 +11,18 @@ class Transaction {
   final String? reference;
   final String? phoneNumber;
 
+   Transaction({
+    required this.id,
+    required this.amount,
+    required this.date,
+    required this.type,
+    required this.status,
+    required this.method,
+    this.reference,
+    this.phoneNumber,
+  });
+
+  String getFormattedDate() => DateFormat('MMM d, y').format(date);
+  String getAmountText() => NumberFormat.currency(symbol: 'UGX ').format(amount);
+
+
