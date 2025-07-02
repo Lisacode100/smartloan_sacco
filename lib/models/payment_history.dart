@@ -35,4 +35,17 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
           phoneNumber: '256775123456',
           reference: 'MTN_REF_123',
         ),
+         Transaction(
+          id: 'SACCO${DateTime.now().millisecondsSinceEpoch + 1}',
+          amount: 5000,
+          date: DateTime.now().subtract(const Duration(days: 3)),
+          status: 'Failed',
+          type: 'Deposit',
+          method: 'Mobile Money',
+          phoneNumber: '256772987654',
+          reference: 'MTN_REF_456',
+        ),
+        Transaction(
+          id: 'SACCO${DateTime.now().millisecondsSinceEpoch + 2}',
+
 
