@@ -5,6 +5,7 @@ import 'package:smartloan_sacco/pages/home_page.dart';
 import 'package:smartloan_sacco/pages/login.dart';
 import 'package:smartloan_sacco/pages/member_dashboard.dart';
 import 'package:smartloan_sacco/pages/register.dart';
+import 'package:smartloan_sacco/pages/splash_page.dart';
 import 'package:smartloan_sacco/pages/verification_page.dart';
 import 'package:smartloan_sacco/utils/logger.dart';
 import 'package:smartloan_sacco/pages/forgot_password.dart';
@@ -26,9 +27,9 @@ class SaccoDashboardApp extends StatelessWidget {
     return MaterialApp(
       title: 'SACCO SHIELD',
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: '/home',
+      initialRoute: '/splash',
       routes: {
-        
+        '/splash':(context)=>SplashPage(),
         '/home': (context) => const HomePage(),
         '/login': (context) => const LoginPage(),
         '/forgotpassword':(context)=> ResetPin(),
