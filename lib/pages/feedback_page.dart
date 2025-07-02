@@ -86,5 +86,19 @@ class _FeedbackPageState extends State<FeedbackPage> {
     );
   }
 
+   Future<void> _submitFeedback() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isSubmitting = true);
+
+    try {
+      // In a real app, this would call your API
+      await Future.delayed(const Duration(seconds: 2));
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Feedback submitted successfully!')),
+      );
+
+
 
 
