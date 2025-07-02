@@ -11,3 +11,25 @@ class MomoPaymentPage extends StatefulWidget {
   State<MomoPaymentPage> createState() => _MomoPaymentPageState();
 }
 
+class _MomoPaymentPageState extends State<MomoPaymentPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _phoneController = TextEditingController();
+  bool _isLoading = false;
+  String? _errorMessage;
+
+  // Initialize with test values in debug mode
+  @override
+  void initState() {
+    super.initState();
+    if (kDebugMode) {
+      _phoneController.text = '775123456'; // Test UG number
+    }
+  }
+
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    super.dispose();
+  }
+
+
