@@ -42,3 +42,49 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 ),
               ),
 
+               const SizedBox(height: 16),
+              TextFormField(
+                controller: _subjectController,
+                decoration: const InputDecoration(
+                  labelText: 'Subject',
+                  border: OutlineInputBorder(),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a subject';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _messageController,
+                decoration: const InputDecoration(
+                  labelText: 'Message',
+                  border: OutlineInputBorder(),
+                ),
+
+                 maxLines: 5,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your message';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _isSubmitting ? null : _submitFeedback,
+                child: _isSubmitting
+                    ? const CircularProgressIndicator()
+                    : const Text('Submit Feedback'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+
