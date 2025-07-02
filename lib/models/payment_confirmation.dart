@@ -43,5 +43,44 @@ class PaymentConfirmationPage extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyLarge,
             ),
+             const SizedBox(height: 32),
+            if (isSuccess) ...[
+              _buildDetailRow('Amount:', 'UGX ${transactionData['amount']?.toStringAsFixed(2) ?? '0.00'}'),
+              _buildDetailRow('To:', 'SACCO Account'),
+              _buildDetailRow('Transaction ID:', transactionData['transactionId'] ?? 'N/A'),
+              _buildDetailRow('Phone:', transactionData['phoneNumber'] ?? 'N/A'),
+            ],
+            const Spacer(),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.popUntil(context, ModalRoute.withName('/member-dashboard'));
+              },
+              child: const Text('Back to Dashboard'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+   Widget _buildDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(width: 8),
+          Text(value),
+        ],
+      ),
+    );
+  }
+}
+
+
+
 
 
