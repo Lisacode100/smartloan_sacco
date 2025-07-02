@@ -47,5 +47,28 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
         ),
         Transaction(
           id: 'SACCO${DateTime.now().millisecondsSinceEpoch + 2}',
+           amount: 20000,
+          date: DateTime.now().subtract(const Duration(days: 5)),
+          status: 'Pending',
+          type: 'Deposit',
+          method: 'Mobile Money',
+          phoneNumber: '256785123456',
+          reference: 'MTN_REF_789',
+        ),
+      ];
+
+      setState(() {
+        _transactions = mockTransactions;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Failed to load transactions: ${e.toString()}';
+        _isLoading = false;
+      });
+    }
+  }
+
+
 
 
