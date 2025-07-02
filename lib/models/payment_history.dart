@@ -167,6 +167,61 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
     if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
+      if (_errorMessage.isNotEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(_errorMessage),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _loadTransactions,
+              child: const Text('Retry'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (_transactions.isEmpty) {
+      return const Center(
+        child: Text('No transactions found'),
+      );
+    }
+
+     return ListView.builder(
+      itemCount: _transactions.length,
+      itemBuilder: (context, index) {
+        final transaction = _transactions[index];
+        return _buildTransactionCard(transaction);
+      },
+    );
+  }
+
+  Widget _buildTransactionCard(Transaction transaction) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      child: InkWell(
+        onTap: () => _showTransactionDetails(transaction),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    transaction.getAmountText(),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  
+
+
+
 
 
 
