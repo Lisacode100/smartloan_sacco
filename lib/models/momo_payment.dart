@@ -32,4 +32,46 @@ class _MomoPaymentPageState extends State<MomoPaymentPage> {
     super.dispose();
   }
 
+  Future<void> _processPayment() async {
+    if (!_formKey.currentState!.validate()) return;
+    
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+    
+    try {
+      final momoService = MomoService(
+        subscriptionKey: 'YOUR_MTN_SUBSCRIPTION_KEY',
+        isSandbox: true, // Change to false in production
+        callbackUrl: 'https://your-sacco.com/momo-callback',
+      );
+
+       final transactionId = MomoService.generateTransactionId();
+      
+      final result = await momoService.requestPayment(
+        phoneNumber: _phoneController.text,
+        amount: widget.amount,
+        externalId: transactionId,
+        payerMessage: 'SACCO Contribution: UGX ${widget.amount.toStringAsFixed(2)}',
+      );
+      
+      if (!mounted) return;
+      
+      Navigator.pushNamed(
+        context,
+        '/payment-confirmation',
+        arguments: {
+          ...result,
+          'success': true,
+          'message': 'Payment initiated successfully',
+        },
+      );
+    } catch (e) {
+      setState(() {
+        _errorMessage = e.toString();
+      });
+
+
+
 
