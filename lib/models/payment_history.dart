@@ -274,6 +274,32 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
+              const SizedBox(height: 16),
+              _buildDetailRow('Transaction ID:', transaction.id),
+              _buildDetailRow('Amount:', transaction.getAmountText()),
+              _buildDetailRow('Status:', transaction.status),
+              _buildDetailRow('Type:', transaction.type),
+              _buildDetailRow('Date:', transaction.getFormattedDate()),
+              _buildDetailRow('Payment Method:', transaction.method),
+              if (transaction.phoneNumber != null)
+                _buildDetailRow('Phone Number:', transaction.phoneNumber!),
+              if (transaction.reference != null)
+                _buildDetailRow('Reference:', transaction.reference!),
+              const SizedBox(height: 24),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Close'),
+                ),
+              ),
+            ],
+             ),
+        );
+      },
+    );
+  }
+
+
 
 
 
