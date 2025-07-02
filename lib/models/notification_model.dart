@@ -1,6 +1,7 @@
 enum NotificationType {
   payment,
   loan,
+  promotion,
   general,
 }
 

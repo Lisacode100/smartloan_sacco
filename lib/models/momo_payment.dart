@@ -5,7 +5,7 @@ import 'package:smartloan_sacco/services/momo_services.dart';
 class MomoPaymentPage extends StatefulWidget {
   final double amount;
   
-  const MomoPaymentPage({super.key, required this.amount});
+  const MomoPaymentPage({super.key, required this.amount, required Null Function(dynamic success) onPaymentComplete});
 
   @override
   State<MomoPaymentPage> createState() => _MomoPaymentPageState();
