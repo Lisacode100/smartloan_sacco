@@ -14,7 +14,7 @@ class LoanApplicationScreen extends StatefulWidget {
     required this.onSubmit,
   });
 
-    @override
+  @override
   State<LoanApplicationScreen> createState() => _LoanApplicationScreenState();
 }
 
@@ -35,7 +35,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     super.dispose();
   }
 
-   @override
+  @override
   Widget build(BuildContext context) {
     final maxLoanAmount = widget.memberSavings * 2;
     final theme = Theme.of(context);
@@ -58,8 +58,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
-                   const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Eligibility Card
               Card(
@@ -81,7 +80,6 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                           ),
                         ],
                       ),
-
                       const SizedBox(height: 10),
                       Text(
                         'Based on your savings of ${_formatCurrency(widget.memberSavings)}, '
@@ -106,7 +104,6 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
                     onPressed: () => _showMaxLoanInfo(maxLoanAmount),
                   ),
                 ),
-
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) return 'Please enter amount';
@@ -119,6 +116,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               ),
               const SizedBox(height: 20),
 
+              // Loan Type
               DropdownButtonFormField<String>(
                 value: _loanType,
                 items: const [
@@ -150,7 +148,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               ),
               const SizedBox(height: 20),
 
-               // Repayment Period
+              // Repayment Period
               DropdownButtonFormField<int>(
                 value: _repaymentPeriod,
                 items: [3, 6, 9, 12, 18, 24].map((months) {
@@ -170,7 +168,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               _buildRepaymentPreview(),
               const SizedBox(height: 30),
 
-                // Document Upload
+              // Document Upload
               Text(
                 'Supporting Documents',
                 style: theme.textTheme.titleMedium?.copyWith(
@@ -200,7 +198,7 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
               ],
               const SizedBox(height: 30),
 
-                // Submit Button
+              // Submit Button
               SizedBox(
                 width: double.infinity,
                 height: 50,
@@ -373,10 +371,3 @@ class _LoanApplicationScreenState extends State<LoanApplicationScreen> {
     return NumberFormat.currency(symbol: 'UGX ', decimalDigits: 0).format(amount);
   }
 }
-
-
-
-
-
-
-

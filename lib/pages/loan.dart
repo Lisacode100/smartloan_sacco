@@ -8,7 +8,7 @@ class Loan {
   final String type;
   final List<Payment> payments;
 
-    Loan({
+  Loan({
     required this.id,
     required this.amount,
     required this.remainingBalance,
@@ -54,5 +54,3 @@ class Payment {
     );
   }
 }
-
-
