@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
                         Navigator.pushNamed(context, '/register');
                       },
                       child: const Text(
-                        "Register Your Sacco",
+                        "Register",
                         style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),

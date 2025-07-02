@@ -91,6 +91,7 @@ class _RegisterSaccoPageState extends State<RegisterSaccoPage> {
               ),
               const SizedBox(height: 12),
               TextFormField(
+                keyboardType: TextInputType.phone,
                 controller: _passwordController,
                 decoration: InputDecoration(
                   labelText: 'PIN Password',
