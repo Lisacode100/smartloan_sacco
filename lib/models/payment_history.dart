@@ -124,6 +124,51 @@ class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
               ),
             ],
           ),
+           actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _initiateMomoPayment(context, amount, phoneNumber);
+              },
+              child: const Text('Deposit'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Payment History'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _loadTransactions,
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showMoMoPaymentDialog(context),
+        tooltip: 'Deposit via MoMo',
+        child: const Icon(Icons.monetization_on),
+      ),
+      body: _buildBody(),
+    );
+  }
+
+  Widget _buildBody() {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+
 
 
 
