@@ -127,6 +127,31 @@ class _MomoPaymentPageState extends State<MomoPaymentPage> {
                   style: TextStyle(color: Theme.of(context).colorScheme.error),
                 ),
 
+                 const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _isLoading ? null : _processPayment,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: _isLoading
+                    ? const CircularProgressIndicator()
+                    : const Text('Pay with Mobile Money'),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'You will receive a Mobile Money prompt on your phone to confirm the payment',
+                style: Theme.of(context).textTheme.bodySmall,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
 
 
 
